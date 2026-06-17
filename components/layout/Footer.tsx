@@ -9,8 +9,8 @@ const cols = [
 export function Footer() {
   return (
     <footer id='footer' className='border-t border-line bg-ink'>
-      <div className='mx-auto grid max-w-shell gap-10 px-5 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:px-8'>
-        <div>
+      <div className='mx-auto grid max-w-shell grid-cols-2 gap-8 px-5 py-14 sm:gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:px-8 md:py-16'>
+        <div className='col-span-2 md:col-span-1'>
           <p className='font-display text-2xl font-extrabold text-cream'>
             SOLE<span className='text-volt'>HAUS</span>
           </p>
@@ -34,7 +34,7 @@ export function Footer() {
         ))}
       </div>
       <div className='border-t border-line'>
-        <div className='mx-auto flex max-w-shell flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted md:flex-row md:px-8'>
+        <div className='mx-auto flex max-w-shell flex-col items-center justify-between gap-3 px-5 py-6 text-center text-xs text-muted md:flex-row md:px-8 md:text-left'>
           <p>© 2026 SOLEHAUS. All rights reserved.</p>
           <p>Crafted in India · Demo store</p>
         </div>
