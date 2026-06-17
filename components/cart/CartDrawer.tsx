@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useCart, selectSubtotal, selectCount } from '@/lib/store/cart'
@@ -23,6 +24,20 @@ export function CartDrawer() {
   const subtotal = useCart(selectSubtotal)
   const count = useCart(selectCount)
   const push = useToast((s) => s.push)
+
+  useEffect(() => {
+    if (isOpen) {
+      window.__lenis?.stop()
+      document.body.style.overflow = 'hidden'
+    } else {
+      window.__lenis?.start()
+      document.body.style.overflow = ''
+    }
+    return () => {
+      window.__lenis?.start()
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const checkout = () => {
     push({ title: 'Demo checkout', description: 'This is a demo store — no real payment taken.' })
@@ -71,7 +86,10 @@ export function CartDrawer() {
               </div>
             ) : (
               <>
-                <div className='flex-1 space-y-4 overflow-y-auto px-5 py-5'>
+                <div
+                  data-lenis-prevent='true'
+                  className='flex-1 space-y-4 overflow-y-auto overscroll-contain px-5 py-5'
+                >
                   {items.map((i) => (
                     <div key={i.key} className='flex gap-4'>
                       <div className='relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-line bg-surface2'>

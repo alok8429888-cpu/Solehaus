@@ -4,6 +4,12 @@ import { useEffect } from 'react'
 import type { ReactNode } from 'react'
 import Lenis from 'lenis'
 
+declare global {
+  interface Window {
+    __lenis?: Lenis
+  }
+}
+
 /** Wraps the app with Lenis smooth scrolling, respecting reduced-motion. */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -13,6 +19,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     })
+    window.__lenis = lenis
 
     let frame = 0
     const raf = (time: number) => {
@@ -24,6 +31,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     return () => {
       cancelAnimationFrame(frame)
       lenis.destroy()
+      window.__lenis = undefined
     }
   }, [])
 

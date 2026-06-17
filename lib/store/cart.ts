@@ -52,7 +52,7 @@ export const useCart = create<CartState>()(
       setQty: (key, qty) =>
         set((s) => ({
           items: s.items
-            .map((i) => (i.key === key ? { ...i, qty: Math.max(1, qty) } : i))
+            .map((i) => (i.key === key ? { ...i, qty: Math.max(0, qty) } : i))
             .filter((i) => i.qty > 0),
         })),
       clear: () => set({ items: [] }),

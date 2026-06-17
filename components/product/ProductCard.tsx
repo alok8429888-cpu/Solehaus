@@ -51,7 +51,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           {product.badge ? <Badge label={product.badge} /> : null}
           {off ? <Badge label={`-${off}%`} className='bg-red-500 text-white' /> : null}
         </div>
-        <div className='absolute inset-x-3 bottom-3 z-20 flex translate-y-3 gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
+        <div className='pointer-events-none absolute inset-x-3 bottom-3 z-20 hidden translate-y-3 gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:flex [@media(hover:hover)]:group-hover:pointer-events-auto'>
           <button
             type='button'
             onClick={() => openQuickView(product)}

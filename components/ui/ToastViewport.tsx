@@ -12,7 +12,7 @@ export function ToastViewport() {
   const toasts = useToast((s) => s.toasts)
 
   return (
-    <div className='pointer-events-none fixed bottom-6 right-6 z-[100] flex w-full max-w-sm flex-col gap-3'>
+    <div className='pointer-events-none fixed inset-x-4 bottom-6 z-[100] flex flex-col gap-3 sm:inset-x-auto sm:right-6 sm:w-full sm:max-w-sm'>
       <AnimatePresence>
         {toasts.map((t) => (
           <motion.div
