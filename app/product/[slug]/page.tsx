@@ -1,0 +1,29 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getProduct, products } from '@/lib/data/products'
+import { ProductDetail } from '@/components/product/ProductDetail'
+import { RelatedProducts } from '@/components/product/RelatedProducts'
+
+export function generateStaticParams() {
+  return products.map((p) => ({ slug: p.slug }))
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const product = getProduct(params.slug)
+  if (!product) return { title: 'Not found — SOLEHAUS' }
+  return {
+    title: `${product.name} — SOLEHAUS`,
+    description: product.description,
+  }
+}
+
+export default function ProductPage({ params }: { params: { slug: string } }) {
+  const product = getProduct(params.slug)
+  if (!product) notFound()
+  return (
+    <>
+      <ProductDetail product={product} />
+      <RelatedProducts current={product} />
+    </>
+  )
+}

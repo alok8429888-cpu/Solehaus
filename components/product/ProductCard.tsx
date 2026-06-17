@@ -1,9 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/Badge'
 import { useCart } from '@/lib/store/cart'
+import { useQuickView } from '@/lib/store/quickview'
 import { useToast } from '@/lib/store/toast'
 import { formatINR, discountPercent } from '@/lib/utils/format'
 import type { Product } from '@/lib/types'
@@ -14,6 +16,7 @@ const once = { once: true, margin: '-60px' }
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const add = useCart((s) => s.add)
+  const openQuickView = useQuickView((s) => s.open)
   const push = useToast((s) => s.push)
   const off = discountPercent(product.price, product.compareAtPrice)
   const transition = { duration: 0.6, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] as const }
@@ -31,6 +34,11 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       transition={transition}
       className='group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-surface'
     >
+      <Link
+        href={`/product/${product.slug}`}
+        aria-label={product.name}
+        className='absolute inset-0 z-10'
+      />
       <div className='relative aspect-square overflow-hidden bg-surface2'>
         <Image
           src={product.image}
@@ -43,17 +51,32 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           {product.badge ? <Badge label={product.badge} /> : null}
           {off ? <Badge label={`-${off}%`} className='bg-red-500 text-white' /> : null}
         </div>
-        <button
-          onClick={onAdd}
-          className='absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-cream py-3 text-sm font-semibold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'
-        >
-          Quick add
-        </button>
+        <div className='absolute inset-x-3 bottom-3 z-20 flex translate-y-3 gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
+          <button
+            type='button'
+            onClick={() => openQuickView(product)}
+            className='flex-1 rounded-full border border-line bg-ink/80 py-2.5 text-xs font-semibold text-cream backdrop-blur transition-colors hover:bg-ink'
+          >
+            Quick view
+          </button>
+          <button
+            type='button'
+            onClick={onAdd}
+            className='flex-1 rounded-full bg-cream py-2.5 text-xs font-semibold text-ink transition-colors hover:bg-volt'
+          >
+            Add
+          </button>
+        </div>
       </div>
       <div className='flex flex-1 flex-col gap-1 p-4'>
         <p className='text-xs uppercase tracking-wider text-muted'>{product.brand}</p>
         <h3 className='font-display text-base font-semibold text-cream'>{product.name}</h3>
-        <p className='text-xs text-muted'>{product.colorway}</p>
+        <div className='mt-1 flex items-center gap-1.5'>
+          {product.colors.map((c) => {
+            const swatch = { backgroundColor: c }
+            return <span key={c} style={swatch} className='h-3 w-3 rounded-full border border-line' />
+          })}
+        </div>
         <div className='mt-2 flex items-center gap-2'>
           <span className='text-sm font-semibold text-cream'>{formatINR(product.price)}</span>
           {product.compareAtPrice ? (
