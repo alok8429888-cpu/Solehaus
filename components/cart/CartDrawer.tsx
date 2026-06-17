@@ -7,6 +7,12 @@ import { useToast } from '@/lib/store/toast'
 import { formatINR } from '@/lib/utils/format'
 import { Button } from '@/components/ui/Button'
 
+const fadeHidden = { opacity: 0 }
+const fadeShown = { opacity: 1 }
+const panelHidden = { x: '100%' }
+const panelShown = { x: 0 }
+const panelSpring = { type: 'spring' as const, stiffness: 320, damping: 34 }
+
 export function CartDrawer() {
   const items = useCart((s) => s.items)
   const isOpen = useCart((s) => s.isOpen)
@@ -29,17 +35,17 @@ export function CartDrawer() {
       {isOpen ? (
         <>
           <motion.div
-            initial= opacity: 0 
-            animate= opacity: 1 
-            exit= opacity: 0 
+            initial={fadeHidden}
+            animate={fadeShown}
+            exit={fadeHidden}
             onClick={close}
             className='fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm'
           />
           <motion.aside
-            initial= x: '100%' 
-            animate= x: 0 
-            exit= x: '100%' 
-            transition= type: 'spring', stiffness: 320, damping: 34 
+            initial={panelHidden}
+            animate={panelShown}
+            exit={panelHidden}
+            transition={panelSpring}
             className='fixed right-0 top-0 z-[95] flex h-full w-full max-w-md flex-col border-l border-line bg-ink'
           >
             <div className='flex items-center justify-between border-b border-line px-5 py-4'>

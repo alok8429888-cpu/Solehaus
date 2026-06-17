@@ -3,6 +3,11 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useToast } from '@/lib/store/toast'
 
+const enter = { opacity: 0, y: 20, scale: 0.95 }
+const show = { opacity: 1, y: 0, scale: 1 }
+const leave = { opacity: 0, x: 40 }
+const spring = { type: 'spring' as const, stiffness: 380, damping: 30 }
+
 export function ToastViewport() {
   const toasts = useToast((s) => s.toasts)
 
@@ -12,10 +17,10 @@ export function ToastViewport() {
         {toasts.map((t) => (
           <motion.div
             key={t.id}
-            initial= opacity: 0, y: 20, scale: 0.95 
-            animate= opacity: 1, y: 0, scale: 1 
-            exit= opacity: 0, x: 40 
-            transition= type: 'spring', stiffness: 380, damping: 30 
+            initial={enter}
+            animate={show}
+            exit={leave}
+            transition={spring}
             className='pointer-events-auto rounded-2xl border border-line bg-surface2/90 px-5 py-4 shadow-2xl backdrop-blur'
           >
             <p className='text-sm font-semibold text-cream'>{t.title}</p>

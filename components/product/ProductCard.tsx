@@ -8,10 +8,15 @@ import { useToast } from '@/lib/store/toast'
 import { formatINR, discountPercent } from '@/lib/utils/format'
 import type { Product } from '@/lib/types'
 
+const enter = { opacity: 0, y: 28 }
+const show = { opacity: 1, y: 0 }
+const once = { once: true, margin: '-60px' }
+
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const add = useCart((s) => s.add)
   const push = useToast((s) => s.push)
   const off = discountPercent(product.price, product.compareAtPrice)
+  const transition = { duration: 0.6, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] as const }
 
   const onAdd = () => {
     add(product, product.sizes[0])
@@ -20,10 +25,10 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
 
   return (
     <motion.article
-      initial= opacity: 0, y: 28 
-      whileInView= opacity: 1, y: 0 
-      viewport= once: true, margin: '-60px' 
-      transition= duration: 0.6, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] 
+      initial={enter}
+      whileInView={show}
+      viewport={once}
+      transition={transition}
       className='group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-surface'
     >
       <div className='relative aspect-square overflow-hidden bg-surface2'>

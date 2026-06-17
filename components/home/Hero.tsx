@@ -14,6 +14,20 @@ const SneakerScene = dynamic(() => import('@/components/three/SneakerScene'), {
 })
 
 const ease = [0.16, 1, 0.3, 1] as const
+const fadeSm = { opacity: 0, y: 20 }
+const fade = { opacity: 0, y: 24 }
+const visible = { opacity: 1, y: 0 }
+const onlyHidden = { opacity: 0 }
+const onlyShown = { opacity: 1 }
+const sceneHidden = { opacity: 0, scale: 0.95 }
+const sceneShown = { opacity: 1, scale: 1 }
+
+const tEyebrow = { duration: 0.6, ease }
+const tHeading = { duration: 0.7, delay: 0.05, ease }
+const tCopy = { duration: 0.7, delay: 0.12, ease }
+const tCta = { duration: 0.7, delay: 0.2, ease }
+const tStats = { duration: 0.8, delay: 0.35 }
+const tScene = { duration: 0.9, delay: 0.2, ease }
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -29,18 +43,18 @@ export function Hero() {
       <div className='mx-auto grid max-w-shell items-center gap-8 px-5 py-16 md:px-8 lg:grid-cols-2 lg:py-24'>
         <div>
           <motion.p
-            initial= opacity: 0, y: 20 
-            animate= opacity: 1, y: 0 
-            transition= duration: 0.6, ease 
+            initial={fadeSm}
+            animate={visible}
+            transition={tEyebrow}
             className='inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-muted'
           >
             <span className='h-1.5 w-1.5 rounded-full bg-volt' /> New drop · Phantom Flux
           </motion.p>
 
           <motion.h1
-            initial= opacity: 0, y: 24 
-            animate= opacity: 1, y: 0 
-            transition= duration: 0.7, delay: 0.05, ease 
+            initial={fade}
+            animate={visible}
+            transition={tHeading}
             className='mt-5 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-cream md:text-7xl'
           >
             Step into
@@ -49,9 +63,9 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            initial= opacity: 0, y: 24 
-            animate= opacity: 1, y: 0 
-            transition= duration: 0.7, delay: 0.12, ease 
+            initial={fade}
+            animate={visible}
+            transition={tCopy}
             className='mt-6 max-w-md text-base text-muted md:text-lg'
           >
             Premium sneakers, limited drops and an interactive 3D try-on. Drag the shoe, feel the
@@ -59,9 +73,9 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            initial= opacity: 0, y: 24 
-            animate= opacity: 1, y: 0 
-            transition= duration: 0.7, delay: 0.2, ease 
+            initial={fade}
+            animate={visible}
+            transition={tCta}
             className='mt-8 flex flex-wrap items-center gap-3'
           >
             <Button size='lg' onClick={() => scrollTo('trending')}>
@@ -73,9 +87,9 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial= opacity: 0 
-            animate= opacity: 1 
-            transition= duration: 0.8, delay: 0.35 
+            initial={onlyHidden}
+            animate={onlyShown}
+            transition={tStats}
             className='mt-10 flex gap-8'
           >
             <div>
@@ -94,9 +108,9 @@ export function Hero() {
         </div>
 
         <motion.div
-          initial= opacity: 0, scale: 0.95 
-          animate= opacity: 1, scale: 1 
-          transition= duration: 0.9, delay: 0.2, ease 
+          initial={sceneHidden}
+          animate={sceneShown}
+          transition={tScene}
           className='relative h-[360px] overflow-hidden rounded-3xl border border-line bg-gradient-to-b from-surface to-ink md:h-[520px]'
         >
           <SneakerScene />

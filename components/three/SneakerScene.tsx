@@ -7,6 +7,10 @@ import { Environment, OrbitControls, Stage, useGLTF, Html } from '@react-three/d
 const MODEL_URL =
   'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb'
 
+const cameraProps = { position: [0, 0, 6] as [number, number, number], fov: 40 }
+const glProps = { antialias: true, alpha: true }
+const stageShadows = { type: 'contact' as const, opacity: 0.4, blur: 2.5 }
+
 function Shoe() {
   const { scene } = useGLTF(MODEL_URL)
   return <primitive object={scene} />
@@ -27,18 +31,9 @@ function SceneLoader() {
 
 export default function SneakerScene() {
   return (
-    <Canvas
-      camera= position: [0, 0, 6], fov: 40 
-      dpr={[1, 2]}
-      gl= antialias: true, alpha: true 
-    >
+    <Canvas camera={cameraProps} dpr={[1, 2]} gl={glProps}>
       <Suspense fallback={<SceneLoader />}>
-        <Stage
-          environment='city'
-          intensity={0.5}
-          shadows= type: 'contact', opacity: 0.4, blur: 2.5 
-          adjustCamera={1.2}
-        >
+        <Stage environment='city' intensity={0.5} shadows={stageShadows} adjustCamera={1.2}>
           <Shoe />
         </Stage>
         <Environment preset='city' />
