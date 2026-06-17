@@ -12,6 +12,7 @@ import { SmoothScroll } from '@/components/providers/SmoothScroll'
 import { MotionProvider } from '@/components/providers/MotionProvider'
 import { PageTransition } from '@/components/providers/PageTransition'
 import { CustomCursor } from '@/components/ui/CustomCursor'
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
 import { JsonLd } from '@/components/seo/JsonLd'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
@@ -28,6 +29,11 @@ const orgJsonLd = {
   name: 'SOLEHAUS',
   url: 'https://solehaus.vercel.app',
   description: 'Premium sneakers & limited drops.',
+}
+
+const themeInitScript = {
+  __html:
+    "try{var t=localStorage.getItem('solehaus-theme')||'volt';document.documentElement.setAttribute('data-theme',t);}catch(e){}",
 }
 
 export const metadata: Metadata = {
@@ -48,6 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={`${inter.variable} ${archivo.variable}`}>
       <body className='min-h-screen bg-ink font-sans text-cream antialiased'>
+        <script dangerouslySetInnerHTML={themeInitScript} />
         <MotionProvider>
           <SmoothScroll>
             <AnnouncementBar />
@@ -61,6 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <QuickView />
           <ToastViewport />
           <CustomCursor />
+          <ThemeSwitcher />
         </MotionProvider>
         <JsonLd data={orgJsonLd} />
       </body>

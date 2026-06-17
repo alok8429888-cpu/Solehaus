@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: '#0A0A0B',
-        surface: '#141418',
-        surface2: '#1C1C22',
-        line: 'rgba(245,245,244,0.08)',
-        volt: '#D8FF34',
-        cream: '#F5F5F4',
-        muted: '#A1A1AA',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        surface2: 'rgb(var(--surface2) / <alpha-value>)',
+        line: 'var(--line)',
+        volt: 'rgb(var(--volt) / <alpha-value>)',
+        cream: 'rgb(var(--cream) / <alpha-value>)',
+        muted: 'rgb(var(--muted) / <alpha-value>)',
       },
       fontFamily: {
         display: ['var(--font-archivo)', 'system-ui', 'sans-serif'],
