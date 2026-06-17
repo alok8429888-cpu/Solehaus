@@ -30,9 +30,9 @@ export function Newsletter() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='you@email.com'
-            className='h-12 flex-1 rounded-full border border-line bg-ink px-5 text-sm text-cream outline-none transition-colors placeholder:text-muted focus:border-volt'
+            className='h-12 w-full rounded-full border border-line bg-ink px-5 text-sm text-cream outline-none transition-colors placeholder:text-muted focus:border-volt sm:flex-1'
           />
-          <Button type='submit' size='lg'>
+          <Button type='submit' size='lg' className='w-full sm:w-auto'>
             Subscribe
           </Button>
         </form>

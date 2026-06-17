@@ -124,11 +124,11 @@ export function ProductDetail({ product }: { product: Product }) {
             <SizeSelector sizes={product.sizes} value={size} onChange={setSize} />
           </div>
 
-          <div className='flex flex-col gap-2 sm:flex-row'>
-            <Button size='lg' className='flex-1' onClick={onAdd}>
+          <div className='flex flex-col gap-3 sm:flex-row'>
+            <Button size='lg' className='w-full sm:flex-1' onClick={onAdd}>
               Add to cart
             </Button>
-            <Link href='/cart' className='flex-1'>
+            <Link href='/cart' className='w-full sm:flex-1'>
               <Button size='lg' variant='outline' className='w-full'>
                 Go to cart
               </Button>
