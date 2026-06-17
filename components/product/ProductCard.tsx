@@ -1,0 +1,61 @@
+'use client'
+
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { Badge } from '@/components/ui/Badge'
+import { useCart } from '@/lib/store/cart'
+import { useToast } from '@/lib/store/toast'
+import { formatINR, discountPercent } from '@/lib/utils/format'
+import type { Product } from '@/lib/types'
+
+export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+  const add = useCart((s) => s.add)
+  const push = useToast((s) => s.push)
+  const off = discountPercent(product.price, product.compareAtPrice)
+
+  const onAdd = () => {
+    add(product, product.sizes[0])
+    push({ title: 'Added to cart', description: `${product.name} · UK ${product.sizes[0]}` })
+  }
+
+  return (
+    <motion.article
+      initial= opacity: 0, y: 28 
+      whileInView= opacity: 1, y: 0 
+      viewport= once: true, margin: '-60px' 
+      transition= duration: 0.6, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] 
+      className='group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-surface'
+    >
+      <div className='relative aspect-square overflow-hidden bg-surface2'>
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes='(max-width:768px) 50vw, 25vw'
+          className='object-cover transition-transform duration-700 ease-out group-hover:scale-105'
+        />
+        <div className='absolute left-3 top-3 flex gap-2'>
+          {product.badge ? <Badge label={product.badge} /> : null}
+          {off ? <Badge label={`-${off}%`} className='bg-red-500 text-white' /> : null}
+        </div>
+        <button
+          onClick={onAdd}
+          className='absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-cream py-3 text-sm font-semibold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'
+        >
+          Quick add
+        </button>
+      </div>
+      <div className='flex flex-1 flex-col gap-1 p-4'>
+        <p className='text-xs uppercase tracking-wider text-muted'>{product.brand}</p>
+        <h3 className='font-display text-base font-semibold text-cream'>{product.name}</h3>
+        <p className='text-xs text-muted'>{product.colorway}</p>
+        <div className='mt-2 flex items-center gap-2'>
+          <span className='text-sm font-semibold text-cream'>{formatINR(product.price)}</span>
+          {product.compareAtPrice ? (
+            <span className='text-xs text-muted line-through'>{formatINR(product.compareAtPrice)}</span>
+          ) : null}
+        </div>
+      </div>
+    </motion.article>
+  )
+}
