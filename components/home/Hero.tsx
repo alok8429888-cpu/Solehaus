@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
+import { Magnetic } from '@/components/ui/Magnetic'
 
 const SneakerScene = dynamic(() => import('@/components/three/SneakerScene'), {
   ssr: false,
@@ -78,12 +79,16 @@ export function Hero() {
             transition={tCta}
             className='mt-8 flex flex-wrap items-center gap-3'
           >
-            <Button size='lg' onClick={() => scrollTo('trending')}>
-              Shop the drop
-            </Button>
-            <Button size='lg' variant='outline' onClick={() => scrollTo('categories')}>
-              Explore
-            </Button>
+            <Magnetic>
+              <Button size='lg' onClick={() => scrollTo('trending')}>
+                Shop the drop
+              </Button>
+            </Magnetic>
+            <Magnetic>
+              <Button size='lg' variant='outline' onClick={() => scrollTo('categories')}>
+                Explore
+              </Button>
+            </Magnetic>
           </motion.div>
 
           <motion.div
