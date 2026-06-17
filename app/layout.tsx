@@ -12,7 +12,6 @@ import { SmoothScroll } from '@/components/providers/SmoothScroll'
 import { MotionProvider } from '@/components/providers/MotionProvider'
 import { PageTransition } from '@/components/providers/PageTransition'
 import { CustomCursor } from '@/components/ui/CustomCursor'
-import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
 import { JsonLd } from '@/components/seo/JsonLd'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
@@ -68,7 +67,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <QuickView />
           <ToastViewport />
           <CustomCursor />
-          <ThemeSwitcher />
         </MotionProvider>
         <JsonLd data={orgJsonLd} />
       </body>

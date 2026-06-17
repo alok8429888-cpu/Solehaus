@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils/cn'
 import { useCart, selectCount } from '@/lib/store/cart'
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
 
 const links = [
   { label: 'New', href: '#trending' },
@@ -49,6 +50,8 @@ export function Navbar() {
         </div>
 
         <div className='flex items-center gap-2'>
+          <ThemeSwitcher />
+
           <button
             aria-label='Search'
             className='hidden h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface2 hover:text-cream md:flex'
